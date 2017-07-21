@@ -13,7 +13,8 @@ class PostgresClient {
   connect () {
     return new Promise((resolve, reject) => {
       if (this.client) return resolve()
-      pg.connect(this.conOptions, (err, client, done) => {
+      const pool = new pg.Pool(this.conOptions)
+      pool.connect((err, client, done) => {
         if (err) return reject(err)
         this.client = client
         this.done = done
